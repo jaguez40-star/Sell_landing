@@ -24,7 +24,12 @@
       "Bash(pnpm --filter frontend build)",
       "PowerShell(& \"C:\\\\APLICACIONES\\\\sellweb\\\\backend\\\\.venv\\\\Scripts\\\\python.exe\" \"C:\\\\Users\\\\jague\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\c--APLICACIONES-sellweb\\\\37bb6036-755c-4640-a3e1-b67d0eba4c78\\\\scratchpad\\\\verify_pola.py\")",
       "PowerShell(& \"C:\\\\APLICACIONES\\\\sellweb\\\\backend\\\\.venv\\\\Scripts\\\\python.exe\" \"C:\\\\Users\\\\jague\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\c--APLICACIONES-sellweb\\\\37bb6036-755c-4640-a3e1-b67d0eba4c78\\\\scratchpad\\\\verify_clientes.py\")",
-      "PowerShell(& \"C:\\\\APLICACIONES\\\\sellweb\\\\backend\\\\.venv\\\\Scripts\\\\python.exe\" \"C:\\\\Users\\\\jague\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\c--APLICACIONES-sellweb\\\\37bb6036-755c-4640-a3e1-b67d0eba4c78\\\\scratchpad\\\\verify_final.py\")"
+      "PowerShell(& \"C:\\\\APLICACIONES\\\\sellweb\\\\backend\\\\.venv\\\\Scripts\\\\python.exe\" \"C:\\\\Users\\\\jague\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\c--APLICACIONES-sellweb\\\\37bb6036-755c-4640-a3e1-b67d0eba4c78\\\\scratchpad\\\\verify_final.py\")",
+      "PowerShell(cd C:\\\\APLICACIONES\\\\sellweb; Write-Output \"=== alembic? ===\"; if \\(Test-Path \"backend\\\\alembic.ini\"\\) { \"SI existe alembic.ini\" } else { \"NO existe alembic.ini aun\" }; if \\(Test-Path \"backend\\\\alembic\"\\) { \"SI existe backend\\\\alembic\\\\\" } else { \"NO existe backend\\\\alembic\\\\\" }; Write-Output \"=== corepack? ===\"; \\(Get-Command corepack -ErrorAction SilentlyContinue\\).Source)",
+      "Bash(curl -s http://localhost:8889/ -o /tmp/home.html)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" http://localhost:8889/)",
+      "Bash(echo \"exit code: $?\")",
+      "Bash(echo \"exit: $?\")"
     ]
   }
 }

@@ -1,0 +1,40 @@
+---
+import { PRODUCTOS } from "@/features/catalogo/data/catalogo";
+import { cop } from "@/shared/formato";
+const tagHtml = (t: string | null) =>
+  t === "rt" ? { cls: "tag rt", txt: "Retornable" }
+  : t === "nrt" ? { cls: "tag nrt", txt: "No retornable" }
+  : t ? { cls: "tag", txt: "Top" } : null;
+---
+<section class="block" id="destacados" style="padding-top:0;">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><span class="eyebrow">Los que más rotan</span><h2>Favoritos de La Pola</h2></div>
+      <a class="more" href="#">Ver catálogo completo →</a>
+    </div>
+    <div class="prod-grid">
+      {PRODUCTOS.map((p) => {
+        const tag = tagHtml(p.etiqueta);
+        return (
+          <article class="card">
+            <div class="thumb">
+              {tag && <span class={tag.cls}>{tag.txt}</span>}
+              <span class="bottle">{p.emoji}</span>
+            </div>
+            <div class="body">
+              <span class="cat-lbl">{p.categoria}</span>
+              <h3>{p.nombre}</h3>
+              <span class="pres">{p.presentacion}</span>
+              <div class="foot">
+                <span class="price">{cop(p.precio)}<small>precio mostrador</small></span>
+                <button class="add" data-add={p.id}>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M12 5v14M5 12h14"/></svg>Agregar
+                </button>
+              </div>
+            </div>
+          </article>
+        );
+      })}
+    </div>
+  </div>
+</section>

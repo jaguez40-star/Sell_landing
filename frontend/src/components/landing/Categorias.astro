@@ -1,0 +1,20 @@
+---
+import { CATEGORIAS } from "@/features/catalogo/data/catalogo";
+---
+<section class="block" id="cat" style="padding-top:24px;">
+  <div class="wrap">
+    <div class="catcard">
+      <span class="eyebrow">Nuestras categorías</span>
+      <h2 class="cat-title">Explora nuestra variedad de bebidas</h2>
+      <div class="cat-rail">
+        {CATEGORIAS.map((c) => (
+          <a class="cat-item" href="#destacados">
+            <span class="circle" style={`background:${c.color}`}>{c.emoji}</span>
+            <b>{c.nombre}</b>
+            <span class="cnt">{c.skus} productos</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>

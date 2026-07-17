@@ -1,0 +1,74 @@
+---
+// Carrusel de banners promocionales (contenido estático + script de rotación).
+---
+<section class="carousel-sec">
+  <div class="wrap">
+    <div class="carousel" id="carousel">
+      <div class="track" id="track">
+        <div class="slide s0">
+          <div class="content">
+            <span class="kicker">Combo del mes</span>
+            <h2>Lleva más,<br /><em>paga menos</em></h2>
+            <p>Cerveza por caja + hielo + gaseosa al precio más frío de la ciudad.</p>
+            <button class="sbtn" type="button">Ver combos 🍺</button>
+          </div>
+          <span class="art">🍻</span>
+          <div class="fine">Aplican términos y condiciones. El exceso de alcohol es perjudicial para la salud. Ley 30 de 1986 · Ley 124 de 1994.</div>
+        </div>
+        <div class="slide s1">
+          <div class="content">
+            <span class="kicker">Solo hoy</span>
+            <h2>Domicilio<br /><em>gratis</em></h2>
+            <p>En pedidos desde $80.000 dentro de tu zona de cobertura. Pide antes de las 4 p.m.</p>
+            <button class="sbtn" type="button">Pedir ahora 🛵</button>
+          </div>
+          <span class="art">🛵</span>
+          <div class="fine">Cobertura sujeta a disponibilidad. Consulta condiciones de entrega.</div>
+        </div>
+        <div class="slide s2">
+          <div class="content">
+            <span class="kicker">Para tu negocio</span>
+            <h2>Precio<br /><em>mayorista</em></h2>
+            <p>Tienda, asadero o billar: regístrate y compra por caja al precio de distribuidor.</p>
+            <button class="sbtn" type="button">Registrar mi negocio 📦</button>
+          </div>
+          <span class="art">📦</span>
+          <div class="fine">Precios mayorista visibles tras registro y verificación del negocio.</div>
+        </div>
+      </div>
+      <button class="cbtn prev" id="cPrev" aria-label="Anterior"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m15 6-6 6 6 6"/></svg></button>
+      <button class="cbtn next" id="cNext" aria-label="Siguiente"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m9 6 6 6-6 6"/></svg></button>
+    </div>
+    <div class="dots" id="dots"></div>
+  </div>
+</section>
+
+<script>
+  const track = document.getElementById("track")!;
+  const dots = document.getElementById("dots")!;
+  const slides = track.children.length;
+  let idx = 0;
+  for (let i = 0; i < slides; i++) {
+    const b = document.createElement("button");
+    b.setAttribute("aria-label", "Ir al banner " + (i + 1));
+    b.dataset.d = String(i);
+    dots.appendChild(b);
+  }
+  const go = (n: number) => {
+    idx = (n + slides) % slides;
+    track.style.transform = "translateX(-" + idx * 100 + "%)";
+    Array.from(dots.children).forEach((d, j) => d.classList.toggle("on", j === idx));
+  };
+  let timer = window.setInterval(() => go(idx + 1), 5000);
+  const reset = () => { window.clearInterval(timer); timer = window.setInterval(() => go(idx + 1), 5000); };
+  document.getElementById("cPrev")!.addEventListener("click", () => { go(idx - 1); reset(); });
+  document.getElementById("cNext")!.addEventListener("click", () => { go(idx + 1); reset(); });
+  dots.addEventListener("click", (e) => {
+    const t = (e.target as HTMLElement).closest<HTMLElement>("[data-d]");
+    if (t) { go(Number(t.dataset.d)); reset(); }
+  });
+  const car = document.getElementById("carousel")!;
+  car.addEventListener("mouseenter", () => window.clearInterval(timer));
+  car.addEventListener("mouseleave", reset);
+  go(0);
+</script>

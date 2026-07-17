@@ -1,0 +1,40 @@
+---
+import { PROMOS, productoPorId, precioOriginal } from "@/features/catalogo/data/catalogo";
+import { cop } from "@/shared/formato";
+const items = PROMOS.map((pr) => {
+  const p = productoPorId(pr.productoId)!;
+  return { p, descuento: pr.descuento, original: precioOriginal(p.precio, pr.descuento) };
+});
+---
+<section class="block" id="promos" style="padding-top:0;">
+  <div class="wrap">
+    <div class="promos">
+      <div class="promos-left">
+        <span class="eyebrow">Descuentos en bebidas</span>
+        <h3 class="promos-title">¿Buscas precios realmente especiales?</h3>
+        <a class="promos-btn" href="#promos">Descuentos <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="m9 6 6 6-6 6"/></svg></a>
+      </div>
+      <div class="promos-right">
+        <div class="promo-rail">
+          {items.map((it) => (
+            <article class="promo-card">
+              <span class="off-badge">{it.descuento}%<br />OFF</span>
+              <div class="pemoji">{it.p.emoji}</div>
+              <h4>{it.p.nombre}</h4>
+              <div class="promo-foot">
+                <span class="promo-price">
+                  <span class="now">{cop(it.p.precio)}</span>
+                  <span class="old">{cop(it.original)}</span>
+                </span>
+                <button class="padd" data-add={it.p.id} title="Agregar">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6h15l-1.5 9h-12L5 3H2"/><circle cx="9" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/></svg>
+                </button>
+              </div>
+            </article>
+          ))}
+        </div>
+        <a class="promos-explore" href="#">Explorar todas las promos →</a>
+      </div>
+    </div>
+  </div>
+</section>

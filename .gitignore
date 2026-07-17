@@ -12,7 +12,8 @@ backend/.ruff_cache/
 backend/.pytest_cache/
 
 # Bases de datos (Tier 1 — solo backups, nunca git)
-data/
+/data/
+/backend/data/
 *.db
 *.db-journal
 *.sqlite3
