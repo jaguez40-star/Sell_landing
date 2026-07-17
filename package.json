@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "description": "Landing page + tienda virtual para DISPOLA SAS",
+  "packageManager": "pnpm@11.9.0",
   "scripts": {
     "dev": "concurrently -n \"api,web\" -c \"cyan,magenta\" \"pnpm dev:api\" \"pnpm dev:web\"",
     "dev:api": "cd backend && uv run uvicorn app.main:app --reload --port 8890",

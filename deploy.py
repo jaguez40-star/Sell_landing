@@ -246,9 +246,17 @@ def paso_frontend_deps(pnpm: str) -> None:
     if not (FRONTEND / "package.json").exists():
         error(f"no se encontro {FRONTEND / 'package.json'}")
         raise SystemExit(1)
-    # Se ejecuta en la raiz: es un workspace pnpm. onlyBuiltDependencies
-    # (pnpm-workspace.yaml) permite compilar esbuild/sharp/@parcel/watcher.
-    correr([pnpm, "install"], cwd=RAIZ)
+    # Se ejecuta en la raiz: es un workspace pnpm.
+    # pnpm puede terminar en codigo 1 con ERR_PNPM_IGNORED_BUILDS (no ejecuta
+    # los scripts de compilacion de esbuild/sharp/@parcel/watcher). NO es fatal:
+    # esos binarios llegan como dependencias opcionales por plataforma. Se tolera
+    # el codigo y se fuerza la compilacion nativa con 'pnpm rebuild' (no interactivo).
+    correr([pnpm, "install"], cwd=RAIZ, obligatorio=False)
+    if not (FRONTEND / "node_modules").exists() and not (RAIZ / "node_modules").exists():
+        error("pnpm install no genero node_modules")
+        raise SystemExit(1)
+    info("compilando dependencias nativas (esbuild / sharp / @parcel/watcher)")
+    correr([pnpm, "rebuild", "@parcel/watcher", "esbuild", "sharp"], cwd=RAIZ, obligatorio=False)
     ok("dependencias del frontend instaladas")
     registrar("Frontend deps", "OK")
 
