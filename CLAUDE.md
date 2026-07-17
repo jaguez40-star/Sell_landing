@@ -146,6 +146,35 @@ Toda página pública debe cumplir:
 
 ---
 
+## 4-bis. Dominio del negocio
+
+**LA POLA** (marca pública de DISPOLA SAS): **distribuidora B2B de bebidas** que revende a negocios (tiendas, asaderos, billares) y personas. Fuente de datos real: `data_ref/POLA.db` (POS/inventario del negocio hermano), 118 SKUs.
+
+### Categorías del catálogo (`DIM_productos.categoria_inventarios`)
+
+| Código | Categoría | SKUs |
+|--------|-----------|------|
+| GASPET001 | Gaseosa PET | 29 |
+| CVZLT001 | Cervezas Lata | 28 |
+| AGUA001 | Agua | 18 |
+| CVZRT001 | Cervezas Botella Retornable (RT) | 13 |
+| CVZNRT001 | Cervezas Botella No Retornable (NRT) | 10 |
+| JUG001 | Jugos | 9 |
+| BEBREH001 | Bebidas Energizantes PET | 5 |
+| CIGARRO001 | Cigarrillos | 4 |
+| BELT001 | Bebidas Energizantes Lata | 2 |
+
+- **Producto:** físico. Venta por unidad y por pack (`facturacion_pack` / `unidades_facturacion_pack`, unidad `uds` vs `SXP`). Flag retornable RT/NRT en cervezas. Stock real con costeo FIFO por lotes.
+- **Clientes:** `persona_natural` (19) y `persona_juridica` (1); muchas "personas naturales" son negocios. Crédito (`dias_credito`, `limite_credito_cop`) modelado, en 0 → desactivado fase 1.
+- **Precios:** 3 niveles en BD (`precio_venta_1` mostrador / `_2` mayorista / `_3` volumen). Regla: público solo `precio_venta_1`; escalones mayoristas solo para clientes logueados.
+- **Seed fase 1:** importar `DIM_productos` → `productos`, `DIM_inventarios` → stock; excluir 4 SKUs con `precio_venta_1 <= 0`; traducir `snake_case` legado al contrato nuevo.
+
+### Landing — secciones
+
+Hero (CTA catálogo/WhatsApp) · Categorías destacadas · Productos destacados · Quiénes somos · Cobertura/zona de reparto · Contacto (WhatsApp + formulario).
+
+---
+
 ## 5. Decisiones bloqueadas
 
 Nunca cambiarlas sin confirmación explícita del usuario.
@@ -156,12 +185,14 @@ Nunca cambiarlas sin confirmación explícita del usuario.
 | D2 | ✅ Cerrada | SQLite (`data/dispola.db`) para la fase inicial de desarrollo. Migración a PostgreSQL evaluable antes de producción. |
 | D3 | 🔶 Pendiente | Pasarela de pagos — el pipeline de venta aún no está definido (candidatas Colombia: Wompi, Mercado Pago, ePayco, PayU). |
 | D4 | 🔶 Pendiente | Dominio — se suministra con el desarrollo ~80% avanzado. |
-| D5 | 🔶 Pendiente | Alcance del checkout fase 1 mientras no haya pasarela (¿pedido por WhatsApp/formulario o stub?). |
-| D6 | 🔶 Pendiente | Modelo de catálogo: qué vende DISPOLA, variantes, manejo de stock. |
-| D7 | 🔶 Pendiente | Clientes: compra como invitado vs registro; B2C/B2B. |
-| D8 | 🔶 Pendiente | Panel admin CRUD vs carga por seed en fase 1. |
-| D9 | 🔶 Pendiente | Identidad visual DISPOLA (logo, paleta, tipografía). |
+| D5 | ✅ Cerrada | Checkout fase 1 = **ambos**: formulario que persiste el pedido en `data/dispola.db` + botón WhatsApp de respaldo. Sin pago online hasta cerrar D3. |
+| D6 | ✅ Cerrada | Catálogo físico (~114 SKUs comercializables de 118), 9 categorías de bebidas. Variantes = presentación/pack (unidad `uds` / six-pack `SXP` / caja). Flag retornable RT/NRT en cervezas. Stock real (FIFO por lotes). Ver ADR-001 y § 4-bis. |
+| D7 | ✅ Cerrada | B2B con registro + invitado. Precios escalonados: público solo ve `precio_venta_1`; mayorista (`_2`/`_3`) solo para clientes logueados, nunca en HTML público. Crédito modelado pero desactivado en fase 1. |
+| D8 | ✅ Cerrada | Fase 1 por **seed/importación** desde `data_ref/POLA.db` → `data/dispola.db`. CRUD admin en fase posterior. |
+| D9 | ✅ Cerrada | Marca pública **LA POLA** (DISPOLA SAS = razón social). Escudo cervecero negro + dorado/ámbar. Paleta: dorado `#f7db17`, ámbar `#c8860a`/`#a3631c`, malta `#824711`/`#441a09`, negro `#1c1917`, crema `#fdfaf7`. Logos en el proyecto hermano `01032026_WebApp/app/static/images/POLA_0{1,2,3}.png`. |
 | — | Asumido | Moneda COP, sitio solo en español, `git init` al arrancar. |
+
+Detalle completo del dominio, mapeo de columnas y secciones de landing: `docs/decisions/ADR-001_dominio_e_identidad.md`.
 
 ---
 
@@ -264,3 +295,4 @@ Cualquier `// TODO[Sx]:` en código → entrada espejo en esta tabla. Al cerrar,
 | Fecha | ID | Descripción | Archivos | Commits |
 |-------|----|-------------|----------|---------|
 | 2026-07-17 | SETUP-0 | Evaluación de factibilidad del stack heredado de Robustez V2.0; cierre de D1 (Astro SSR + islas React) y D2 (SQLite dev); creación de este CLAUDE.md | `CLAUDE.md` | — |
+| 2026-07-17 | DOM-1 | Análisis de dominio desde `data_ref/POLA.db` + identidad del proyecto hermano; cierre de D5, D6, D7, D8, D9; ADR-001 | `CLAUDE.md`, `docs/decisions/ADR-001_dominio_e_identidad.md` | — |
