@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(git init -b main)",
+      "PowerShell(git add CLAUDE.md .gitignore stack_tesh.md reglas_reutilizables.md)",
+      "PowerShell(git config user.name)",
+      "PowerShell(git config user.email)",
+      "PowerShell(git config user.email \"jaguez40@gmail.com\")",
+      "PowerShell(git config user.name \"jaguez40\")",
+      "PowerShell(git add .claude/settings.json)"
+    ]
+  }
+}

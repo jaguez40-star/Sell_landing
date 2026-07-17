@@ -1,0 +1,36 @@
+# Dependencias
+node_modules/
+.venv/
+__pycache__/
+*.pyc
+
+# Builds
+frontend/dist/
+frontend/.astro/
+backend/.mypy_cache/
+backend/.ruff_cache/
+backend/.pytest_cache/
+
+# Bases de datos (Tier 1 — solo backups, nunca git)
+data/
+*.db
+*.db-journal
+*.sqlite3
+
+# Secretos
+.env
+.env.*
+!.env.example
+
+# Backups
+backups/
+*.zip
+
+# IDE / SO
+.vscode/
+.idea/
+Thumbs.db
+.DS_Store
+
+# Logs
+*.log
