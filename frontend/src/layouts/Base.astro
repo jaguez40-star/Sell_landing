@@ -1,0 +1,40 @@
+---
+// Layout base con <head> SEO (§4 CLAUDE.md). Todo contenido SEO-crítico es SSR.
+import "../styles/global.scss";
+
+interface Props {
+  titulo: string;
+  descripcion: string;
+  imagenOg?: string;
+}
+
+const { titulo, descripcion, imagenOg } = Astro.props;
+const urlCanonica = new URL(Astro.url.pathname, Astro.site);
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="canonical" href={urlCanonica} />
+
+    <title>{titulo}</title>
+    <meta name="description" content={descripcion} />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={titulo} />
+    <meta property="og:description" content={descripcion} />
+    <meta property="og:url" content={urlCanonica} />
+    {imagenOg && <meta property="og:image" content={imagenOg} />}
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <slot name="head" />
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>

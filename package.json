@@ -1,0 +1,22 @@
+{
+  "name": "dispola-sellweb",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Landing page + tienda virtual para DISPOLA SAS",
+  "scripts": {
+    "dev": "concurrently -n \"api,web\" -c \"cyan,magenta\" \"pnpm dev:api\" \"pnpm dev:web\"",
+    "dev:api": "cd backend && uv run uvicorn app.main:app --reload --port 8890",
+    "dev:web": "pnpm --filter frontend dev",
+    "build": "pnpm --filter frontend build",
+    "lint:api": "cd backend && uv run ruff check . && uv run mypy app",
+    "test:api": "cd backend && uv run pytest",
+    "test:web": "pnpm --filter frontend test"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.0"
+  },
+  "engines": {
+    "node": ">=22",
+    "pnpm": ">=11"
+  }
+}

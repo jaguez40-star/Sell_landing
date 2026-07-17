@@ -1,0 +1,20 @@
+---
+// Landing page (placeholder). Contenido y secciones reales pendientes (D9 marca, contenido).
+import Base from "../layouts/Base.astro";
+import EstadoApi from "../features/health/components/EstadoApi.tsx";
+---
+
+<Base
+  titulo="DISPOLA SAS — Tienda virtual"
+  descripcion="DISPOLA SAS: catálogo y tienda virtual. Sitio en construcción."
+>
+  <main class="contenedor" style="padding-block: 4rem;">
+    <h1 style="font-size: 2.5rem; margin-bottom: 1rem;">DISPOLA SAS</h1>
+    <p style="font-size: 1.25rem; color: #555; margin-bottom: 2rem;">
+      Landing page + tienda virtual. Scaffolding inicial en marcha.
+    </p>
+
+    <!-- Isla React: se hidrata solo cuando entra en viewport (Core Web Vitals, §4). -->
+    <EstadoApi client:visible />
+  </main>
+</Base>

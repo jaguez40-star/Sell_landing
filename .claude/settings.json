@@ -7,7 +7,21 @@
       "PowerShell(git config user.email)",
       "PowerShell(git config user.email \"jaguez40@gmail.com\")",
       "PowerShell(git config user.name \"jaguez40\")",
-      "PowerShell(git add .claude/settings.json)"
+      "PowerShell(git add .claude/settings.json)",
+      "PowerShell(node --version 2>$null)",
+      "PowerShell(pnpm --version 2>$null)",
+      "PowerShell(python --version 2>$null)",
+      "PowerShell(uv --version 2>$null)",
+      "PowerShell(gh --version 2>$null)",
+      "Bash(./.venv/Scripts/uvicorn.exe app.main:app --port 8890 --log-level warning)",
+      "Bash(curl -s http://localhost:8890/api/health)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" -X OPTIONS http://localhost:8890/api/health -H \"Origin: http://localhost:8889\" -H \"Access-Control-Request-Method: GET\")",
+      "Bash(./node_modules/.bin/astro dev *)",
+      "Bash(pnpm --filter frontend dev)",
+      "Bash(curl -s http://localhost:8889/)",
+      "Bash(curl -s http://localhost:8889/api/health)",
+      "Bash(curl -s -o /dev/null -w \"sitemap-index.xml: %{http_code}\\\\n\" http://localhost:8889/sitemap-index.xml)",
+      "Bash(pnpm --filter frontend build)"
     ]
   }
 }
